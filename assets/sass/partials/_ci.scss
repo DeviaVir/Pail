@@ -3,6 +3,7 @@
   height: auto !important;
   height: 100%;
   margin: 0 auto;
+  position: relative;
 }
 
 header {
@@ -15,26 +16,32 @@ header {
 }
 
 #page, #sidebar {
-  margin: 0;
+  margin: 44px 0 0;
   padding: 0;
   display: block;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  overflow: auto;
 }
 
 #page {
   width: 80%;
-  float: left;
+  right: 0;
   border-left: 1px solid #e8e8e8;
 
   h1 {
     font-size: 32px;
+    font-family: 'Minion Pro';
   }
 
   p {
     font-size: 22px;
+    font-family: 'Minion Pro';
   }
 }
 
 #sidebar {
   width: 20%;
-  float: left;
+  left: 0;
 }
