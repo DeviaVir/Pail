@@ -1,0 +1,40 @@
+#container {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto;
+}
+
+header {
+  display: block;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid #e6e6e6;
+  height: 44px;
+  background: #eee;
+}
+
+#page, #sidebar {
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+#page {
+  width: 80%;
+  float: left;
+  border-left: 1px solid #e8e8e8;
+
+  h1 {
+    font-size: 32px;
+  }
+
+  p {
+    font-size: 22px;
+  }
+}
+
+#sidebar {
+  width: 20%;
+  float: left;
+}
