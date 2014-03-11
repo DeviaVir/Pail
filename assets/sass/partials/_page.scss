@@ -1,19 +1,76 @@
-// Everything that marks up your pages
+// Everything that marks up your pages 
+
+// Vars 
+$header-height: 50px;
+
+// Fonts
 @font-face {
-    font-family: 'Minion Pro';
-    src: url('../fonts/minion_pro-webfont.eot');
-    src: url('../fonts/minion_pro-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/minion_pro-webfont.woff') format('woff'),
-         url('../fonts/minion_pro-webfont.ttf') format('truetype'),
-         url('../fonts/minion_pro-webfont.svg#minion_proregular') format('svg');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'Pail';
+  src: url('../fonts/it.eot?v=1');
+  src: url('../fonts/it.eot?#iefix&v=1') format('embedded-opentype'),
+  	   url('../fonts/it.woff?v=1') format('woff'),
+  	   url('../fonts/it.ttf?v=1') format('truetype'),
+  	   url('../fonts/it.svg?v=1#italic') format('svg');
+  font-weight: normal;
+  font-style: italic;
 }
 
+@font-face {
+  font-family: 'Pail';
+  src: url('../fonts/regular.eot?v=1');
+  src: url('../fonts/regular.eot?#iefix&v=1') format('embedded-opentype'),
+  	   url('../fonts/regular.woff?v=1') format('woff'),
+  	   url('../fonts/regular.ttf?v=1') format('truetype'),
+  	   url('../fonts/regular.svg?v=1#regular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pail';
+  src: url('../fonts/semiboldit.eot?v=1');
+  src: url('../fonts/semiboldit.eot?#iefix&v=1') format('embedded-opentype'),
+  	   url('../fonts/semiboldit.woff?v=1') format('woff'),
+  	   url('../fonts/semiboldit.ttf?v=1') format('truetype'),
+  	   url('../fonts/semiboldit.svg?v=1#italic') format('svg');
+  font-weight: 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Pail';
+  src: url('../fonts/semibold.eot?v=1');
+  src: url('../fonts/semibold.eot?#iefix&v=1') format('embedded-opentype'),
+  	   url('../fonts/semibold.woff?v=1') format('woff'),
+  	   url('../fonts/semibold.ttf?v=1') format('truetype'),
+  	   url('../fonts/semibold.svg?v=1#italic') format('svg');
+  font-weight: 700;
+  font-style: normal;
+}
+
+// Defaults
 * {
 	margin: 0;
 }
 
 html, body {
 	height: 100%;
+	-webkit-font-smoothing: subpixel-antialiased;
+	-webkit-text-stroke: 0px;
+}
+
+body {
+	font-family: Helvetica, sans-serif;
+}
+
+.strong {
+	font-weight: 700 !important;
+}
+
+.red {
+	color: #ea9095 !important;
+}
+
+a, a:visited, a:link {
+	color: #5ea7dc;
 }

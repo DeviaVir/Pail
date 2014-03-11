@@ -1,0 +1,27 @@
+{
+  "name": "Pail",
+  "version": "0.0.1",
+  "homepage": "http://pail.sillevis.net/",
+  "authors": [
+    "Chase Sillevis <chase@sillevis.net>"
+  ],
+  "description": "The clean mail client",
+  "main": "assets/css/app.css",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-route": "~1.2.14",
+    "angular-sanitize": "~1.2.14",
+    "fontawesome": "~4.0.3",
+    "foundation": "~5.2.0",
+    "instantclick": "*",
+    "ngprogress": "~1.0.4"
+  }
+}

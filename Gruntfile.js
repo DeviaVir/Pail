@@ -26,6 +26,7 @@ module.exports = function(grunt) {
           './bower_components/angular/angular.js',
           './bower_components/angular-route/angular-route.js',
           './bower_components/angular-sanitize/angular-sanitize.js',
+          './bower_components/ngprogress/build/ngProgress.js',
           './bower_components/modernizr/modernizr.js',
           './bower_components/instantclick/instantclick.js',
           './assets/js/script.js'
@@ -50,6 +51,7 @@ module.exports = function(grunt) {
           './bower_components/angular/angular.js',
           './bower_components/angular-route/angular-route.js',
           './bower_components/angular-sanitize/angular-sanitize.js',
+          './bower_components/ngprogress/build/ngProgress.js',
           './bower_components/modernizr/modernizr.js',
           './bower_components/instantclick/instantclick.js',
           './assets/js/script.js'
