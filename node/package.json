@@ -1,0 +1,25 @@
+{
+  "name": "pail",
+  "version": "0.0.1",
+  "description": "The clean e-mail client.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DeviaVir/Pail"
+  },
+  "author": "Chase Sillevis <chase@sillevis.net>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DeviaVir/Pail/issues"
+  },
+  "homepage": "https://github.com/DeviaVir/Pail",
+  "dependencies": {
+    "imap": "^0.8.9",
+    "primus": "~2.0.2",
+    "ws": "~0.4.31",
+    "smtp": "^0.1.4"
+  }
+}
