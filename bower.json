@@ -21,7 +21,8 @@
     "angular-sanitize": "~1.2.14",
     "fontawesome": "~4.0.3",
     "foundation": "~5.2.0",
-    "instantclick": "*",
-    "ngprogress": "~1.0.4"
+    "ngprogress": "~1.0.4",
+    "localforage": "*",
+    "KeyboardJS": "~0.4.2"
   }
 }

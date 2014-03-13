@@ -2,6 +2,7 @@ var pail = angular.module('pail', ['ngRoute', 'ngSanitize', 'ngProgress'])
     .config(['$routeProvider', function($routeProvider) {
       $routeProvider
         .when('/', {templateUrl: 'partials/home.html', controller: Home})
+        .when('/setup', {templateUrl: 'partials/setup.html', controller: Setup})
         .when('/mail', {templateUrl: 'partials/mail.html', controller: Mail})
         .when('/compose', {templateUrl: 'partials/compose.html', controller: Compose})
         .otherwise({redirectTo: '/'});
@@ -9,10 +10,6 @@ var pail = angular.module('pail', ['ngRoute', 'ngSanitize', 'ngProgress'])
   .run(function($rootScope, ngProgress) {
       $rootScope.$on('$viewContentLoaded', function () {
         $(document).foundation();
-        var primus = Primus.connect('http://localhost:8080/');
-        primus.on('data', function message(data) {
-          handle(data);
-        });
       });
       $rootScope.$on('$routeChangeStart', function() {
         ngProgress.start();
@@ -22,10 +19,65 @@ var pail = angular.module('pail', ['ngRoute', 'ngSanitize', 'ngProgress'])
       });
   });
 
-function AppController( $scope, $http )
+function AppController($scope, $http, $location)
 {
   // Init methods
   $scope.Gravatar = Gravatar;
+
+  $scope.primus = Primus.connect('http://localhost:8080/');
+  $scope.messages = [];
+  $scope.primus.on('data', function message(data) {
+    handle($scope, data);
+  });
+
+  $scope.users    = null;
+  localforage.getItem('users', function getItem(result){
+    $scope.users = result;
+    if($scope.users == null && $location.$$path != '/setup') {
+      $location.path('/setup');
+    }
+  });
+}
+
+function Setup($scope, $http, $location)
+{
+  $scope.users    = null;
+  localforage.getItem('users', function getItem(result){
+    $scope.users = result;
+    if($scope.users != null && $location.$$path == '/setup') {
+      $location.path('/');
+    }
+  });
+
+  // Do stuff
+  $scope.master = {};
+
+  $scope.update = function update(user) {
+    $scope.master = angular.copy(user);
+    $scope.primus.write({'method': 'testImap', 'user': user});
+
+    $scope.primus.on('data', function message(data) {
+      if('method' in data && data.method == 'testImap') {
+        if(data.response === true) {
+          $scope.result = true;
+          $scope.users = [];
+          $scope.users.push(user);
+          localforage.setItem('users', $scope.users);
+
+          $location.path('/');
+        }
+        else {
+          $scope.result = false;
+        }
+      }
+    });
+  }
+
+  $scope.reset = function reset() {
+    $scope.user = angular.copy($scope.master);
+  }
+
+  $scope.reset();
 }
 
 function Home($scope, $http, $location)
@@ -33,6 +85,19 @@ function Home($scope, $http, $location)
   if(typeof macgap !== 'undefined') {
     macgap.growl.notify({title: 'MacGap', content: 'Hello World'});
   }
+
+  $scope.users    = null;
+  localforage.getItem('users', function getItem(result){
+    $scope.users = result;
+    if($scope.users != null) {
+      var checkers = [];
+      $scope.users.forEach(function forEach(v, i) {
+        var checker = setInterval( function() {
+          $scope.primus.write({'method': 'checkImap', 'user': v})
+        }, 3000);
+      })
+    }
+  });  
 }
 
 function Mail($scope, $http, $location)
@@ -42,12 +107,34 @@ function Mail($scope, $http, $location)
 
 function Compose($scope, $http, $location)
 {
-  
+  KeyboardJS.on('command + a, ctrl + a', function() {
+    console.log('you pressed cmd+a!');
+  });
 }
 
-function handle(data)
+function handle($scope, data)
 {
-  console.log('New data received: ', data);
+  console.log('New message received: ', data);
+  if('method' in data) {
+    switch(data.method) {
+      case 'newMessage':
+        var updated = false;
+        $scope.messages.forEach(function(v, i) {
+          if(v.id == data.response['message-id'][0]) {
+            data.response.date[0] = new Date(Date.parse(data.response.date[0]));
+            v.data = data.response;
+            updated = true;
+          }
+        })
+        if(updated === false) {
+          data.response.date[0] = new Date(Date.parse(data.response.date[0]));
+          $scope.messages.push({ id: data.response['message-id'][0], data: data.response });
+        }
+        console.log($scope.messages);
+      break;
+    }
+  }
+  $scope.$apply();
 }
 
 function Gravatar(email, size)

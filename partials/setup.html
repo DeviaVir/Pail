@@ -1,0 +1,62 @@
+<div class="row">
+	<div class="large-12 small-12">
+		<h1>Set up account</h1>
+	</div>
+	<form novalidate class="simple-form">
+		<div class="large-12 small-12">
+			<h3>Account</h3>
+			<label for="name">Name:</label><br />
+			<input type="text" id="name" ng-model="user.name" />
+		</div>
+		<div class="large-5 small-12 left">
+			<h3>IMAP</h3>
+			<label for="imap-email">Username:</label><br />
+			<input type="text" id="imap-email" ng-model="user.imap.email" />
+
+			<label for="imap-password">Password:</label><br />
+			<input type="password" id="imap-password" ng-model="user.imap.password" />
+
+			<div class="large-8 small-12 left">
+				<label for="imap-host">Host:</label>
+			</div>
+			<div class="large-3 small-12 right">
+				<label for="imap-port">Port:</label>
+			</div><br />
+			<div class="large-8 small-12 left">
+				<input type="text" id="imap-host" ng-model="user.imap.host" />
+			</div>
+			<div class="large-3 small-12 right">
+				<input type="text" id="imap-port" ng-model="user.imap.port" />
+			</div><br style="clear: both;" />
+
+			<label for="imap-tls"><input type="checkbox" value="1" id="imap-tls" ng-model="user.imap.tls" /> SSL</label> 
+		</div>
+		<div class="large-5 small-12 right">
+			<h3>SMTP</h3>
+			<label for="smtp-email">Username:</label><br />
+			<input type="text" id="smtp-email" ng-model="user.smtp.email" />
+
+			<label for="smtp-password">Password:</label><br />
+			<input type="password" id="smtp-password" ng-model="user.smtp.password" />
+
+			<div class="large-8 small-12 left">
+				<label for="smtp-host">Host:</label>
+			</div>
+			<div class="large-3 small-12 right">
+				<label for="smtp-port">Port:</label>
+			</div><br />
+			<div class="large-8 small-12 left">
+				<input type="text" id="smtp-host" ng-model="user.smtp.host" />
+			</div>
+			<div class="large-3 small-12 right">
+				<input type="text" id="smtp-port" ng-model="user.smtp.port" />
+			</div><br style="clear: both;" />
+
+			<label for="smtp-tls"><input type="checkbox" value="1" id="smtp-tls" ng-model="user.smtp.tls" /> TLS</label> 
+		</div>
+		<div class="large-12 small-12">
+			<button class="button" ng-click="reset()">RESET</button>
+		    <button class="button success right" ng-click="update(user)">SAVE</button>
+	    </div>
+	</form>
+</div>

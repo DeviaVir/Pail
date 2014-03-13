@@ -1,0 +1,12 @@
+<ul class="items" ng-if="users">
+  <li class="search">
+    <input type="search" name="search" placeholder="Search" />
+  </li>
+  <li ng-repeat="message in messages">
+    <a href="/#/mail/{{ message.id }}">
+      <strong>{{ message.data.from[0] }}<i>{{ ((message.data.date[0].getHours() < 10 ? '0' : '') + message.data.date[0].getHours()) + ':' + ((message.data.date[0].getMinutes()<10?'0':'') + message.data.date[0].getMinutes()) }}</i></strong>
+      <em>{{ message.data.subject[0] }}</em>
+      <p>Lorum ipsum dolor sit amet</p>
+    </a>
+  </li>
+</ul>

@@ -28,7 +28,8 @@ module.exports = function(grunt) {
           './bower_components/angular-sanitize/angular-sanitize.js',
           './bower_components/ngprogress/build/ngProgress.js',
           './bower_components/modernizr/modernizr.js',
-          './bower_components/instantclick/instantclick.js',
+          './bower_components/localforage/dist/localforage.js',
+          './bower_components/KeyboardJS/keyboard.js',
           './assets/js/script.js'
         ],   
         tasks: ['concat:frontend','uglify:frontend'],
@@ -53,7 +54,8 @@ module.exports = function(grunt) {
           './bower_components/angular-sanitize/angular-sanitize.js',
           './bower_components/ngprogress/build/ngProgress.js',
           './bower_components/modernizr/modernizr.js',
-          './bower_components/instantclick/instantclick.js',
+          './bower_components/localforage/dist/localforage.js',
+          './bower_components/KeyboardJS/keyboard.js',
           './assets/js/script.js'
         ],
         dest: './assets/js/package.js',

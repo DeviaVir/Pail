@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-
 var Primus = require('primus'),
     http   = require('http'),
-    colour  = '#f4f4f4';
+    Imap = require('imap'),
+    inspect = require('util').inspect;
 
 var server = http.createServer().listen(8080),
     primus = new Primus(server);
@@ -18,18 +18,22 @@ primus.on('connection', function (spark) {
     if('method' in data) {
       switch(data.method) {
         case 'checkImap':
-          checkImap(data.user);
+          checkImap(data.user, spark.id, function(res){
+            primus.write({'method': data.method, 'response': res});
+          });
+        break;
+        case 'testImap':
+          testImap(data.user, function(res){
+            primus.write({'method': data.method, 'response': res});
+          });
         break;
       }
     }
   });
 });
 
-function checkImap(user, callback)
+function connectImap(user)
 {
-  var Imap = require('imap'),
-      inspect = require('util').inspect;
-
   var imap = new Imap({
     user: user.email,
     password: user.password,
@@ -39,6 +43,29 @@ function checkImap(user, callback)
     tlsOptions: { rejectUnauthorized: false }
   });
 
+  return imap;
+}
+
+function testImap(user, callback)
+{
+  var imap = connectImap(user.imap);
+
+  imap.once('error', function(err) {
+    console.log(err);
+    callback(false);
+  });
+
+  imap.once('ready', function() {
+    console.log('ready');
+    callback(true);
+  });
+
+  imap.connect();
+}
+
+function checkImap(user, sparkId, callback)
+{
+  var imap = connectImap(user.imap);
   function openInbox(cb) {
     imap.openBox('INBOX', true, cb);
   }
@@ -47,7 +74,7 @@ function checkImap(user, callback)
     openInbox(function(err, box) {
       if (err) throw err;
       var f = imap.seq.fetch('1:3', {
-        bodies: 'HEADER.FIELDS (FROM TO SUBJECT DATE)',
+        bodies: 'HEADER.FIELDS (FROM TO SUBJECT DATE MESSAGE-ID)',
         struct: true
       });
       f.on('message', function(msg, seqno) {
@@ -60,6 +87,11 @@ function checkImap(user, callback)
           });
           stream.once('end', function() {
             console.log(prefix + 'Parsed header: %s', inspect(Imap.parseHeader(buffer)));
+            primus.forEach(function (spark, id, connections) {
+              if (id !== sparkId) return;
+
+              spark.write({'method': 'newMessage', 'response': Imap.parseHeader(buffer)});
+            });
           });
         });
         msg.once('attributes', function(attrs) {
@@ -87,6 +119,7 @@ function checkImap(user, callback)
 
   imap.once('end', function() {
     console.log('Connection ended');
+    callback(true);
   });
 
   imap.connect();
