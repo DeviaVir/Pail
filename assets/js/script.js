@@ -125,7 +125,7 @@ function handle($scope, data)
             v.data = data.response;
             updated = true;
           }
-        })
+        });
         if(updated === false) {
           data.response.date[0] = new Date(Date.parse(data.response.date[0]));
           $scope.messages.push({ id: data.response['message-id'][0], data: data.response });
